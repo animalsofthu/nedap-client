@@ -1,5 +1,6 @@
 {
     "name": "animalsofthu/nedap-client",
+    "type": "library",
     "description": "",
     "keywords": [
         "swagger",
