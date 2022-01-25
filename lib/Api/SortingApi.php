@@ -12,10 +12,20 @@
 /**
  * Nedap Livestock Connect
  *
- * # Access Tokens With each endpoint information can be retrieved for one installation only. The access token controls which installation will be accessed. This means that you need to use different access tokens for different installations.      # Scopes For each installation, different packages of data ('Connections') are available. On connect.nedap-livestockmanagement.com/nedap-livestock-connect/ an overview of the different available packages and the corresponding enpdoints is given. The basic connection is free to use, but for some of the other connections additional charges will be applied. In order to get access to other connections your application needs permission from us, and from the specific farmer. The first part can be arranged by contacting Nedap, the second part by OAuth2 scopes.  In OAuth2, scopes let you specify which data your application needs from a user. When requesting permission from a farmer to access his data, you specify which scopes you need, what kind of data you want. If the farmer accepts, you will receive a token for those specified scopes. With that token, you can only access API Endpoints that are allowed by those scopes, since every endpoint needs a specific scope to access it.  Summarized:    - Endpoints are protected by scopes. To access them, you need a token with the correct scopes.    - When requesting access to a farm, by default you get access to the scope 'account', which gives access to basic data. If you need more, send those scopes along with the request.    - You can only request scopes that are permitted by your application. If you need more, contact us.  To access the different available connections, use the following scopes:  ## Cows  ### Basic Connection - account: Access to basic data: animals, groups, and calendar events  ### Attentions Connection - account: Access to attentions  ### Heat Detection Advanced Connection - heat_detection: Access to heat detection  ### Health and Management Advanced Connection - behaviour: Access to behavioural data: activity, eating, standing, lying, standups and walking - rumination: Access to rumination data - inactive: Access to inactive data  ### Sire Advice Connection - sire_advice: Access to sire advices  ## Pigs  ### Basic Connection - account: Access to basic data: animals, groups, calendar events and attentions  ### Sow Weights Connection - weights: Access to weighing data  ### Sorting Connection - sorting: Access to sorting data  ### Pig Performance Testing Connection - pig_performance_testing: Access to pig performance testing data  ### Feeding Connection - feeding_animal_summaries: Access to feeding animal summaries - feeding_location_summaries: Access to feeding location summaries - feeding_extended_location_summaries: Access to feeding location summaries including station totals  # Standards  In the API we use the following standards:  - Timestamps are always in UTC in ISO 8601. An example would be '2017-10-23T20:21:01Z'. - Weights are always in grams.  # HTTP Error codes  We use the following HTTP codes to signify errors: - 400 (Invalid data): The data that is sent is invalid (for example an incorrect Animal object). The return body contains pointers on the specific errors. - 401 (Unauthorized): The provided token is not valid or has expired. - 403 (Forbidden): The provided token is valid but has no access to the accessed endpoint. - 404 (Not found): The object that is requested is not found. - 500 (Server error): Something unexpected went wrong on the server.
+ * # Access Tokens With each endpoint information can be retrieved for one
+ * installation only. The access token controls which installation will be
+ * accessed. This means that you need to use different access tokens for
+ * different installations.      # Scopes For each installation, different
+ * packages of data ('Connections') are available. On
+ * connect.nedap-livestockmanagement.com/nedap-livestock-connect/ an overview
+ * of the different available packages and the corresponding enpdoints is
+ * given. The basic connection is free to use, but for some of the other
+ * connections additional charges will be applied. In order to get access to
+ * other connections your application needs permission from us, and from the
+ * specific farmer. The first part can be arranged by contacting Nedap, the second part by OAuth2 scopes.  In OAuth2, scopes let you specify which data your application needs from a user. When requesting permission from a farmer to access his data, you specify which scopes you need, what kind of data you want. If the farmer accepts, you will receive a token for those specified scopes. With that token, you can only access API Endpoints that are allowed by those scopes, since every endpoint needs a specific scope to access it.  Summarized:    - Endpoints are protected by scopes. To access them, you need a token with the correct scopes.    - When requesting access to a farm, by default you get access to the scope 'account', which gives access to basic data. If you need more, send those scopes along with the request.    - You can only request scopes that are permitted by your application. If you need more, contact us.  To access the different available connections, use the following scopes:  ## Cows  ### Basic Connection - account: Access to basic data: animals, groups, and calendar events  ### Attentions Connection - account: Access to attentions  ### Heat Detection Advanced Connection - heat_detection: Access to heat detection  ### Health and Management Advanced Connection - behaviour: Access to behavioural data: activity, eating, standing, lying, standups and walking - rumination: Access to rumination data - inactive: Access to inactive data  ### Sire Advice Connection - sire_advice: Access to sire advices  ## Pigs  ### Basic Connection - account: Access to basic data: animals, groups, calendar events and attentions  ### Sow Weights Connection - weights: Access to weighing data  ### Sorting Connection - sorting: Access to sorting data  ### Pig Performance Testing Connection - pig_performance_testing: Access to pig performance testing data  ### Feeding Connection - feeding_animal_summaries: Access to feeding animal summaries - feeding_location_summaries: Access to feeding location summaries - feeding_extended_location_summaries: Access to feeding location summaries including station totals  # Standards  In the API we use the following standards:  - Timestamps are always in UTC in ISO 8601. An example would be '2017-10-23T20:21:01Z'. - Weights are always in grams.  # HTTP Error codes  We use the following HTTP codes to signify errors: - 400 (Invalid data): The data that is sent is invalid (for example an incorrect Animal object). The return body contains pointers on the specific errors. - 401 (Unauthorized): The provided token is not valid or has expired. - 403 (Forbidden): The provided token is valid but has no access to the accessed endpoint. - 404 (Not found): The object that is requested is not found. - 500 (Server error): Something unexpected went wrong on the server.
  *
  * OpenAPI spec version: v1
- * 
+ *
  * Generated by: https://github.com/swagger-api/swagger-codegen.git
  * Swagger Codegen version: 2.4.15
  */
@@ -47,670 +57,715 @@ use Swagger\Client\ObjectSerializer;
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class SortingApi
-{
-    /**
-     * @var ClientInterface
-     */
-    protected $client;
+class SortingApi {
 
-    /**
-     * @var Configuration
-     */
-    protected $config;
+  /**
+   * @var ClientInterface
+   */
+  protected $client;
 
-    /**
-     * @var HeaderSelector
-     */
-    protected $headerSelector;
+  /**
+   * @var Configuration
+   */
+  protected $config;
 
-    /**
-     * @param ClientInterface $client
-     * @param Configuration   $config
-     * @param HeaderSelector  $selector
-     */
-    public function __construct(
-        ClientInterface $client = null,
-        Configuration $config = null,
-        HeaderSelector $selector = null
-    ) {
-        $this->client = $client ?: new Client();
-        $this->config = $config ?: new Configuration();
-        $this->headerSelector = $selector ?: new HeaderSelector();
-    }
+  /**
+   * @var HeaderSelector
+   */
+  protected $headerSelector;
 
-    /**
-     * @return Configuration
-     */
-    public function getConfig()
-    {
-        return $this->config;
-    }
+  /**
+   * @param ClientInterface $client
+   * @param Configuration $config
+   * @param HeaderSelector $selector
+   */
+  public function __construct(
+    ClientInterface $client = NULL,
+    Configuration $config = NULL,
+    HeaderSelector $selector = NULL
+  ) {
+    $this->client = $client ?: new Client();
+    $this->config = $config ?: new Configuration();
+    $this->headerSelector = $selector ?: new HeaderSelector();
+  }
 
-    /**
-     * Operation sortingDeliverySummaries
-     *
-     * sorting delivery summaries
-     *
-     * @param  string $location_uuid The location uuid (optional)
-     * @param  \DateTime $start_date start datetime (inclusive). Example: 2020-07-15T08:07:19Z (optional)
-     * @param  \DateTime $end_date end datetime (exclusive). Example: 2020-07-15T08:07:19Z (optional)
-     *
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\SortingDeliverySummary
-     */
-    public function sortingDeliverySummaries($location_uuid = null, $start_date = null, $end_date = null)
-    {
-        list($response) = $this->sortingDeliverySummariesWithHttpInfo($location_uuid, $start_date, $end_date);
-        return $response;
-    }
+  /**
+   * @return Configuration
+   */
+  public function getConfig() {
+    return $this->config;
+  }
 
-    /**
-     * Operation sortingDeliverySummariesWithHttpInfo
-     *
-     * sorting delivery summaries
-     *
-     * @param  string $location_uuid The location uuid (optional)
-     * @param  \DateTime $start_date start datetime (inclusive). Example: 2020-07-15T08:07:19Z (optional)
-     * @param  \DateTime $end_date end datetime (exclusive). Example: 2020-07-15T08:07:19Z (optional)
-     *
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\SortingDeliverySummary, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function sortingDeliverySummariesWithHttpInfo($location_uuid = null, $start_date = null, $end_date = null)
-    {
-        $returnType = '\Swagger\Client\Model\SortingDeliverySummary';
-        $request = $this->sortingDeliverySummariesRequest($location_uuid, $start_date, $end_date);
+  /**
+   * Operation sortingDeliverySummaries
+   *
+   * sorting delivery summaries
+   *
+   * @param string $location_uuid The location uuid (optional)
+   * @param \DateTime $start_date start datetime (inclusive). Example:
+   *   2020-07-15T08:07:19Z (optional)
+   * @param \DateTime $end_date end datetime (exclusive). Example:
+   *   2020-07-15T08:07:19Z (optional)
+   *
+   * @return \Swagger\Client\Model\SortingDeliverySummary
+   * @throws \InvalidArgumentException
+   * @throws \Swagger\Client\ApiException on non-2xx response
+   */
+  public function sortingDeliverySummaries($location_uuid = NULL, $start_date = NULL, $end_date = NULL) {
+    [$response] = $this->sortingDeliverySummariesWithHttpInfo($location_uuid, $start_date, $end_date);
+    return $response;
+  }
 
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
-                );
-            }
+  /**
+   * Operation sortingDeliverySummariesWithHttpInfo
+   *
+   * sorting delivery summaries
+   *
+   * @param string $location_uuid The location uuid (optional)
+   * @param \DateTime $start_date start datetime (inclusive). Example:
+   *   2020-07-15T08:07:19Z (optional)
+   * @param \DateTime $end_date end datetime (exclusive). Example:
+   *   2020-07-15T08:07:19Z (optional)
+   *
+   * @return array of \Swagger\Client\Model\SortingDeliverySummary, HTTP status
+   *   code, HTTP response headers (array of strings)
+   * @throws \InvalidArgumentException
+   * @throws \Swagger\Client\ApiException on non-2xx response
+   */
+  public function sortingDeliverySummariesWithHttpInfo($location_uuid = NULL, $start_date = NULL, $end_date = NULL) {
+    $returnType = '\Swagger\Client\Model\SortingDeliverySummary';
+    $request = $this->sortingDeliverySummariesRequest($location_uuid, $start_date, $end_date);
 
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Swagger\Client\Model\SortingDeliverySummary',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 401:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Swagger\Client\Model\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Swagger\Client\Model\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Swagger\Client\Model\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation sortingDeliverySummariesAsync
-     *
-     * sorting delivery summaries
-     *
-     * @param  string $location_uuid The location uuid (optional)
-     * @param  \DateTime $start_date start datetime (inclusive). Example: 2020-07-15T08:07:19Z (optional)
-     * @param  \DateTime $end_date end datetime (exclusive). Example: 2020-07-15T08:07:19Z (optional)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function sortingDeliverySummariesAsync($location_uuid = null, $start_date = null, $end_date = null)
-    {
-        return $this->sortingDeliverySummariesAsyncWithHttpInfo($location_uuid, $start_date, $end_date)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation sortingDeliverySummariesAsyncWithHttpInfo
-     *
-     * sorting delivery summaries
-     *
-     * @param  string $location_uuid The location uuid (optional)
-     * @param  \DateTime $start_date start datetime (inclusive). Example: 2020-07-15T08:07:19Z (optional)
-     * @param  \DateTime $end_date end datetime (exclusive). Example: 2020-07-15T08:07:19Z (optional)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function sortingDeliverySummariesAsyncWithHttpInfo($location_uuid = null, $start_date = null, $end_date = null)
-    {
-        $returnType = '\Swagger\Client\Model\SortingDeliverySummary';
-        $request = $this->sortingDeliverySummariesRequest($location_uuid, $start_date, $end_date);
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = $responseBody->getContents();
-                        if ($returnType !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
-
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
-                }
-            );
-    }
-
-    /**
-     * Create request for operation 'sortingDeliverySummaries'
-     *
-     * @param  string $location_uuid The location uuid (optional)
-     * @param  \DateTime $start_date start datetime (inclusive). Example: 2020-07-15T08:07:19Z (optional)
-     * @param  \DateTime $end_date end datetime (exclusive). Example: 2020-07-15T08:07:19Z (optional)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function sortingDeliverySummariesRequest($location_uuid = null, $start_date = null, $end_date = null)
-    {
-
-        $resourcePath = '/v1/sorting/delivery_summaries';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-        // query params
-        if ($location_uuid !== null) {
-            $queryParams['location_uuid'] = ObjectSerializer::toQueryValue($location_uuid);
-        }
-        // query params
-        if ($start_date !== null) {
-            $queryParams['start_date'] = ObjectSerializer::toQueryValue($start_date);
-        }
-        // query params
-        if ($end_date !== null) {
-            $queryParams['end_date'] = ObjectSerializer::toQueryValue($end_date);
-        }
-
-
-        // body params
-        $_tempBody = null;
-
-        if ($multipart) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                []
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            // $_tempBody is the method argument, if present
-            $httpBody = $_tempBody;
-            
-            if($headers['Content-Type'] === 'application/json') {
-                // \stdClass has no __toString(), so we should encode it manually
-                if ($httpBody instanceof \stdClass) {
-                    $httpBody = \GuzzleHttp\json_encode($httpBody);
-                }
-                // array has no __toString(), so we should encode it manually
-                if(is_array($httpBody)) {
-                    $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($httpBody));
-                }
-            }
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
-            }
-        }
-
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
+    try {
+      $options = $this->createHttpClientOption();
+      try {
+        $response = $this->client->send($request, $options);
+      } catch (RequestException $e) {
+        throw new ApiException(
+          "[{$e->getCode()}] {$e->getMessage()}",
+          $e->getCode(),
+          $e->getResponse() ? $e->getResponse()->getHeaders() : NULL,
+          $e->getResponse() ? $e->getResponse()->getBody()->getContents() : NULL
         );
+      }
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        return new Request(
-            'GET',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
+      $statusCode = $response->getStatusCode();
+
+      if ($statusCode < 200 || $statusCode > 299) {
+        throw new ApiException(
+          sprintf(
+            '[%d] Error connecting to the API (%s)',
+            $statusCode,
+            $request->getUri()
+          ),
+          $statusCode,
+          $response->getHeaders(),
+          $response->getBody()
         );
+      }
+
+      $responseBody = $response->getBody();
+      if ($returnType === '\SplFileObject') {
+        $content = $responseBody; //stream goes to serializer
+      }
+      else {
+        $content = $responseBody->getContents();
+        if ($returnType !== 'string') {
+          $content = json_decode($content);
+        }
+      }
+
+      $items = [];
+      foreach ($content->sorting_delivery_summaries as $sorting_delivery_summary) {
+        $items[] = ObjectSerializer::deserialize($sorting_delivery_summary, $returnType, []);
+      }
+
+      return [
+        $items,
+        $response->getStatusCode(),
+        $response->getHeaders(),
+      ];
+
+    } catch (ApiException $e) {
+      switch ($e->getCode()) {
+        case 200:
+          $data = ObjectSerializer::deserialize(
+            $e->getResponseBody(),
+            '\Swagger\Client\Model\SortingDeliverySummary',
+            $e->getResponseHeaders()
+          );
+          $e->setResponseObject($data);
+          break;
+        case 401:
+          $data = ObjectSerializer::deserialize(
+            $e->getResponseBody(),
+            '\Swagger\Client\Model\Error',
+            $e->getResponseHeaders()
+          );
+          $e->setResponseObject($data);
+          break;
+        case 403:
+          $data = ObjectSerializer::deserialize(
+            $e->getResponseBody(),
+            '\Swagger\Client\Model\Error',
+            $e->getResponseHeaders()
+          );
+          $e->setResponseObject($data);
+          break;
+        case 404:
+          $data = ObjectSerializer::deserialize(
+            $e->getResponseBody(),
+            '\Swagger\Client\Model\Error',
+            $e->getResponseHeaders()
+          );
+          $e->setResponseObject($data);
+          break;
+      }
+      throw $e;
+    }
+  }
+
+  /**
+   * Operation sortingDeliverySummariesAsync
+   *
+   * sorting delivery summaries
+   *
+   * @param string $location_uuid The location uuid (optional)
+   * @param \DateTime $start_date start datetime (inclusive). Example:
+   *   2020-07-15T08:07:19Z (optional)
+   * @param \DateTime $end_date end datetime (exclusive). Example:
+   *   2020-07-15T08:07:19Z (optional)
+   *
+   * @return \GuzzleHttp\Promise\PromiseInterface
+   * @throws \InvalidArgumentException
+   */
+  public function sortingDeliverySummariesAsync($location_uuid = NULL, $start_date = NULL, $end_date = NULL) {
+    return $this->sortingDeliverySummariesAsyncWithHttpInfo($location_uuid, $start_date, $end_date)
+      ->then(
+        function ($response) {
+          return $response[0];
+        }
+      );
+  }
+
+  /**
+   * Operation sortingDeliverySummariesAsyncWithHttpInfo
+   *
+   * sorting delivery summaries
+   *
+   * @param string $location_uuid The location uuid (optional)
+   * @param \DateTime $start_date start datetime (inclusive). Example:
+   *   2020-07-15T08:07:19Z (optional)
+   * @param \DateTime $end_date end datetime (exclusive). Example:
+   *   2020-07-15T08:07:19Z (optional)
+   *
+   * @return \GuzzleHttp\Promise\PromiseInterface
+   * @throws \InvalidArgumentException
+   */
+  public function sortingDeliverySummariesAsyncWithHttpInfo($location_uuid = NULL, $start_date = NULL, $end_date = NULL) {
+    $returnType = '\Swagger\Client\Model\SortingDeliverySummary';
+    $request = $this->sortingDeliverySummariesRequest($location_uuid, $start_date, $end_date);
+
+    return $this->client
+      ->sendAsync($request, $this->createHttpClientOption())
+      ->then(
+        function ($response) use ($returnType) {
+          $responseBody = $response->getBody();
+          if ($returnType === '\SplFileObject') {
+            $content = $responseBody; //stream goes to serializer
+          }
+          else {
+            $content = $responseBody->getContents();
+            if ($returnType !== 'string') {
+              $content = json_decode($content);
+            }
+          }
+
+          $items = [];
+          foreach ($content->sorting_delivery_summaries as $sorting_delivery_summary) {
+            $items[] = ObjectSerializer::deserialize($sorting_delivery_summary, $returnType, []);
+          }
+
+          return [
+            $items,
+            $response->getStatusCode(),
+            $response->getHeaders(),
+          ];
+        },
+        function ($exception) {
+          $response = $exception->getResponse();
+          $statusCode = $response->getStatusCode();
+          throw new ApiException(
+            sprintf(
+              '[%d] Error connecting to the API (%s)',
+              $statusCode,
+              $exception->getRequest()->getUri()
+            ),
+            $statusCode,
+            $response->getHeaders(),
+            $response->getBody()
+          );
+        }
+      );
+  }
+
+  /**
+   * Create request for operation 'sortingDeliverySummaries'
+   *
+   * @param string $location_uuid The location uuid (optional)
+   * @param \DateTime $start_date start datetime (inclusive). Example:
+   *   2020-07-15T08:07:19Z (optional)
+   * @param \DateTime $end_date end datetime (exclusive). Example:
+   *   2020-07-15T08:07:19Z (optional)
+   *
+   * @return \GuzzleHttp\Psr7\Request
+   * @throws \InvalidArgumentException
+   */
+  protected function sortingDeliverySummariesRequest($location_uuid = NULL, $start_date = NULL, $end_date = NULL) {
+
+    $resourcePath = '/v1/sorting/delivery_summaries';
+    $formParams = [];
+    $queryParams = [];
+    $headerParams = [];
+    $httpBody = '';
+    $multipart = FALSE;
+
+    // query params
+    if ($location_uuid !== NULL) {
+      $queryParams['location_uuid'] = ObjectSerializer::toQueryValue($location_uuid);
+    }
+    // query params
+    if ($start_date !== NULL) {
+      $queryParams['start_date'] = ObjectSerializer::toQueryValue($start_date);
+    }
+    // query params
+    if ($end_date !== NULL) {
+      $queryParams['end_date'] = ObjectSerializer::toQueryValue($end_date);
     }
 
-    /**
-     * Operation sortingLocationSummaries
-     *
-     * sorting location summaries
-     *
-     * @param  string $location_uuid The location uuid (required)
-     * @param  \DateTime $start_date start datetime (inclusive). Example: 2020-07-15T08:07:19Z (optional)
-     * @param  \DateTime $end_date end datetime (exclusive). Example: 2020-07-15T08:07:19Z (optional)
-     *
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return \Swagger\Client\Model\SortingLocationSummary
-     */
-    public function sortingLocationSummaries($location_uuid, $start_date = null, $end_date = null)
-    {
-        list($response) = $this->sortingLocationSummariesWithHttpInfo($location_uuid, $start_date, $end_date);
-        return $response;
+
+    // body params
+    $_tempBody = NULL;
+
+    if ($multipart) {
+      $headers = $this->headerSelector->selectHeadersForMultipart(
+        ['application/json']
+      );
+    }
+    else {
+      $headers = $this->headerSelector->selectHeaders(
+        ['application/json'],
+        []
+      );
     }
 
-    /**
-     * Operation sortingLocationSummariesWithHttpInfo
-     *
-     * sorting location summaries
-     *
-     * @param  string $location_uuid The location uuid (required)
-     * @param  \DateTime $start_date start datetime (inclusive). Example: 2020-07-15T08:07:19Z (optional)
-     * @param  \DateTime $end_date end datetime (exclusive). Example: 2020-07-15T08:07:19Z (optional)
-     *
-     * @throws \Swagger\Client\ApiException on non-2xx response
-     * @throws \InvalidArgumentException
-     * @return array of \Swagger\Client\Model\SortingLocationSummary, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function sortingLocationSummariesWithHttpInfo($location_uuid, $start_date = null, $end_date = null)
-    {
-        $returnType = '\Swagger\Client\Model\SortingLocationSummary';
-        $request = $this->sortingLocationSummariesRequest($location_uuid, $start_date, $end_date);
+    // for model (json/xml)
+    if (isset($_tempBody)) {
+      // $_tempBody is the method argument, if present
+      $httpBody = $_tempBody;
 
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-            if ($statusCode < 200 || $statusCode > 299) {
-                throw new ApiException(
-                    sprintf(
-                        '[%d] Error connecting to the API (%s)',
-                        $statusCode,
-                        $request->getUri()
-                    ),
-                    $statusCode,
-                    $response->getHeaders(),
-                    $response->getBody()
-                );
-            }
-
-            $responseBody = $response->getBody();
-            if ($returnType === '\SplFileObject') {
-                $content = $responseBody; //stream goes to serializer
-            } else {
-                $content = $responseBody->getContents();
-                if ($returnType !== 'string') {
-                    $content = json_decode($content);
-                }
-            }
-
-            return [
-                ObjectSerializer::deserialize($content, $returnType, []),
-                $response->getStatusCode(),
-                $response->getHeaders()
-            ];
-
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 200:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Swagger\Client\Model\SortingLocationSummary',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 401:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Swagger\Client\Model\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 403:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Swagger\Client\Model\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-                case 404:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\Swagger\Client\Model\Error',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    break;
-            }
-            throw $e;
+      if ($headers['Content-Type'] === 'application/json') {
+        // \stdClass has no __toString(), so we should encode it manually
+        if ($httpBody instanceof \stdClass) {
+          $httpBody = \GuzzleHttp\json_encode($httpBody);
         }
+        // array has no __toString(), so we should encode it manually
+        if (is_array($httpBody)) {
+          $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($httpBody));
+        }
+      }
+    }
+    elseif (count($formParams) > 0) {
+      if ($multipart) {
+        $multipartContents = [];
+        foreach ($formParams as $formParamName => $formParamValue) {
+          $multipartContents[] = [
+            'name'     => $formParamName,
+            'contents' => $formParamValue,
+          ];
+        }
+        // for HTTP post (form)
+        $httpBody = new MultipartStream($multipartContents);
+
+      }
+      elseif ($headers['Content-Type'] === 'application/json') {
+        $httpBody = \GuzzleHttp\json_encode($formParams);
+
+      }
+      else {
+        // for HTTP post (form)
+        $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+      }
     }
 
-    /**
-     * Operation sortingLocationSummariesAsync
-     *
-     * sorting location summaries
-     *
-     * @param  string $location_uuid The location uuid (required)
-     * @param  \DateTime $start_date start datetime (inclusive). Example: 2020-07-15T08:07:19Z (optional)
-     * @param  \DateTime $end_date end datetime (exclusive). Example: 2020-07-15T08:07:19Z (optional)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function sortingLocationSummariesAsync($location_uuid, $start_date = null, $end_date = null)
-    {
-        return $this->sortingLocationSummariesAsyncWithHttpInfo($location_uuid, $start_date, $end_date)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
+
+    $defaultHeaders = [];
+    if ($this->config->getUserAgent()) {
+      $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
     }
 
-    /**
-     * Operation sortingLocationSummariesAsyncWithHttpInfo
-     *
-     * sorting location summaries
-     *
-     * @param  string $location_uuid The location uuid (required)
-     * @param  \DateTime $start_date start datetime (inclusive). Example: 2020-07-15T08:07:19Z (optional)
-     * @param  \DateTime $end_date end datetime (exclusive). Example: 2020-07-15T08:07:19Z (optional)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function sortingLocationSummariesAsyncWithHttpInfo($location_uuid, $start_date = null, $end_date = null)
-    {
-        $returnType = '\Swagger\Client\Model\SortingLocationSummary';
-        $request = $this->sortingLocationSummariesRequest($location_uuid, $start_date, $end_date);
+    $headers = array_merge(
+      $defaultHeaders,
+      $headerParams,
+      $headers
+    );
 
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    $responseBody = $response->getBody();
-                    if ($returnType === '\SplFileObject') {
-                        $content = $responseBody; //stream goes to serializer
-                    } else {
-                        $content = $responseBody->getContents();
-                        if ($returnType !== 'string') {
-                            $content = json_decode($content);
-                        }
-                    }
+    $query = \GuzzleHttp\Psr7\build_query($queryParams);
+    return new Request(
+      'GET',
+      $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+      $headers,
+      $httpBody
+    );
+  }
 
-                    return [
-                        ObjectSerializer::deserialize($content, $returnType, []),
-                        $response->getStatusCode(),
-                        $response->getHeaders()
-                    ];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        $response->getBody()
-                    );
-                }
-            );
-    }
+  /**
+   * Operation sortingLocationSummaries
+   *
+   * sorting location summaries
+   *
+   * @param string $location_uuid The location uuid (required)
+   * @param \DateTime $start_date start datetime (inclusive). Example:
+   *   2020-07-15T08:07:19Z (optional)
+   * @param \DateTime $end_date end datetime (exclusive). Example:
+   *   2020-07-15T08:07:19Z (optional)
+   *
+   * @return \Swagger\Client\Model\SortingLocationSummary
+   * @throws \InvalidArgumentException
+   * @throws \Swagger\Client\ApiException on non-2xx response
+   */
+  public function sortingLocationSummaries($location_uuid, $start_date = NULL, $end_date = NULL) {
+    list($response) = $this->sortingLocationSummariesWithHttpInfo($location_uuid, $start_date, $end_date);
+    return $response;
+  }
 
-    /**
-     * Create request for operation 'sortingLocationSummaries'
-     *
-     * @param  string $location_uuid The location uuid (required)
-     * @param  \DateTime $start_date start datetime (inclusive). Example: 2020-07-15T08:07:19Z (optional)
-     * @param  \DateTime $end_date end datetime (exclusive). Example: 2020-07-15T08:07:19Z (optional)
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    protected function sortingLocationSummariesRequest($location_uuid, $start_date = null, $end_date = null)
-    {
-        // verify the required parameter 'location_uuid' is set
-        if ($location_uuid === null || (is_array($location_uuid) && count($location_uuid) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $location_uuid when calling sortingLocationSummaries'
-            );
-        }
+  /**
+   * Operation sortingLocationSummariesWithHttpInfo
+   *
+   * sorting location summaries
+   *
+   * @param string $location_uuid The location uuid (required)
+   * @param \DateTime $start_date start datetime (inclusive). Example:
+   *   2020-07-15T08:07:19Z (optional)
+   * @param \DateTime $end_date end datetime (exclusive). Example:
+   *   2020-07-15T08:07:19Z (optional)
+   *
+   * @return array of \Swagger\Client\Model\SortingLocationSummary, HTTP status
+   *   code, HTTP response headers (array of strings)
+   * @throws \InvalidArgumentException
+   * @throws \Swagger\Client\ApiException on non-2xx response
+   */
+  public function sortingLocationSummariesWithHttpInfo($location_uuid, $start_date = NULL, $end_date = NULL) {
+    $returnType = '\Swagger\Client\Model\SortingLocationSummary';
+    $request = $this->sortingLocationSummariesRequest($location_uuid, $start_date, $end_date);
 
-        $resourcePath = '/v1/sorting/location/location_summaries';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
+    try {
+      $options = $this->createHttpClientOption();
 
-        // query params
-        if ($location_uuid !== null) {
-            $queryParams['location_uuid'] = ObjectSerializer::toQueryValue($location_uuid);
-        }
-        // query params
-        if ($start_date !== null) {
-            $queryParams['start_date'] = ObjectSerializer::toQueryValue($start_date);
-        }
-        // query params
-        if ($end_date !== null) {
-            $queryParams['end_date'] = ObjectSerializer::toQueryValue($end_date);
-        }
-
-
-        // body params
-        $_tempBody = null;
-
-        if ($multipart) {
-            $headers = $this->headerSelector->selectHeadersForMultipart(
-                ['application/json']
-            );
-        } else {
-            $headers = $this->headerSelector->selectHeaders(
-                ['application/json'],
-                []
-            );
-        }
-
-        // for model (json/xml)
-        if (isset($_tempBody)) {
-            // $_tempBody is the method argument, if present
-            $httpBody = $_tempBody;
-            
-            if($headers['Content-Type'] === 'application/json') {
-                // \stdClass has no __toString(), so we should encode it manually
-                if ($httpBody instanceof \stdClass) {
-                    $httpBody = \GuzzleHttp\json_encode($httpBody);
-                }
-                // array has no __toString(), so we should encode it manually
-                if(is_array($httpBody)) {
-                    $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($httpBody));
-                }
-            }
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $multipartContents[] = [
-                        'name' => $formParamName,
-                        'contents' => $formParamValue
-                    ];
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif ($headers['Content-Type'] === 'application/json') {
-                $httpBody = \GuzzleHttp\json_encode($formParams);
-
-            } else {
-                // for HTTP post (form)
-                $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
-            }
-        }
-
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
+      $options['debug'] = TRUE;
+      
+      try {
+        $response = $this->client->send($request, $options);
+      } catch (RequestException $e) {
+        throw new ApiException(
+          "[{$e->getCode()}] {$e->getMessage()}",
+          $e->getCode(),
+          $e->getResponse() ? $e->getResponse()->getHeaders() : NULL,
+          $e->getResponse() ? $e->getResponse()->getBody()->getContents() : NULL
         );
+      }
 
-        $query = \GuzzleHttp\Psr7\build_query($queryParams);
-        return new Request(
-            'GET',
-            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
+      $statusCode = $response->getStatusCode();
+
+      if ($statusCode < 200 || $statusCode > 299) {
+        throw new ApiException(
+          sprintf(
+            '[%d] Error connecting to the API (%s)',
+            $statusCode,
+            $request->getUri()
+          ),
+          $statusCode,
+          $response->getHeaders(),
+          $response->getBody()
         );
-    }
+      }
 
-    /**
-     * Create http client option
-     *
-     * @throws \RuntimeException on file opening failure
-     * @return array of http client options
-     */
-    protected function createHttpClientOption()
-    {
-        $options = [];
-        if ($this->config->getDebug()) {
-            $options[RequestOptions::DEBUG] = fopen($this->config->getDebugFile(), 'a');
-            if (!$options[RequestOptions::DEBUG]) {
-                throw new \RuntimeException('Failed to open the debug file: ' . $this->config->getDebugFile());
-            }
+      $responseBody = $response->getBody();
+      if ($returnType === '\SplFileObject') {
+        $content = $responseBody; //stream goes to serializer
+      }
+      else {
+        $content = $responseBody->getContents();
+        if ($returnType !== 'string') {
+          $content = json_decode($content);
         }
+      }
 
-        return $options;
+      $items = [];
+      foreach ($content->sorting_location_summaries as $sorting_location_summary) {
+        $items[] = ObjectSerializer::deserialize($sorting_location_summary, $returnType, []);
+      }
+
+      return [
+        $items,
+        $response->getStatusCode(),
+        $response->getHeaders(),
+      ];
+
+    } catch (ApiException $e) {
+      switch ($e->getCode()) {
+        case 200:
+          $data = ObjectSerializer::deserialize(
+            $e->getResponseBody(),
+            '\Swagger\Client\Model\SortingLocationSummary',
+            $e->getResponseHeaders()
+          );
+          $e->setResponseObject($data);
+          break;
+        case 401:
+          $data = ObjectSerializer::deserialize(
+            $e->getResponseBody(),
+            '\Swagger\Client\Model\Error',
+            $e->getResponseHeaders()
+          );
+          $e->setResponseObject($data);
+          break;
+        case 403:
+          $data = ObjectSerializer::deserialize(
+            $e->getResponseBody(),
+            '\Swagger\Client\Model\Error',
+            $e->getResponseHeaders()
+          );
+          $e->setResponseObject($data);
+          break;
+        case 404:
+          $data = ObjectSerializer::deserialize(
+            $e->getResponseBody(),
+            '\Swagger\Client\Model\Error',
+            $e->getResponseHeaders()
+          );
+          $e->setResponseObject($data);
+          break;
+      }
+      throw $e;
     }
+  }
+
+  /**
+   * Operation sortingLocationSummariesAsync
+   *
+   * sorting location summaries
+   *
+   * @param string $location_uuid The location uuid (required)
+   * @param \DateTime $start_date start datetime (inclusive). Example:
+   *   2020-07-15T08:07:19Z (optional)
+   * @param \DateTime $end_date end datetime (exclusive). Example:
+   *   2020-07-15T08:07:19Z (optional)
+   *
+   * @return \GuzzleHttp\Promise\PromiseInterface
+   * @throws \InvalidArgumentException
+   */
+  public function sortingLocationSummariesAsync($location_uuid, $start_date = NULL, $end_date = NULL) {
+    return $this->sortingLocationSummariesAsyncWithHttpInfo($location_uuid, $start_date, $end_date)
+      ->then(
+        function ($response) {
+          return $response[0];
+        }
+      );
+  }
+
+  /**
+   * Operation sortingLocationSummariesAsyncWithHttpInfo
+   *
+   * sorting location summaries
+   *
+   * @param string $location_uuid The location uuid (required)
+   * @param \DateTime $start_date start datetime (inclusive). Example:
+   *   2020-07-15T08:07:19Z (optional)
+   * @param \DateTime $end_date end datetime (exclusive). Example:
+   *   2020-07-15T08:07:19Z (optional)
+   *
+   * @return \GuzzleHttp\Promise\PromiseInterface
+   * @throws \InvalidArgumentException
+   */
+  public function sortingLocationSummariesAsyncWithHttpInfo($location_uuid, $start_date = NULL, $end_date = NULL) {
+    $returnType = '\Swagger\Client\Model\SortingLocationSummary';
+    $request = $this->sortingLocationSummariesRequest($location_uuid, $start_date, $end_date);
+
+    return $this->client
+      ->sendAsync($request, $this->createHttpClientOption())
+      ->then(
+        function ($response) use ($returnType) {
+          $responseBody = $response->getBody();
+          if ($returnType === '\SplFileObject') {
+            $content = $responseBody; //stream goes to serializer
+          }
+          else {
+            $content = $responseBody->getContents();
+            if ($returnType !== 'string') {
+              $content = json_decode($content);
+            }
+          }
+
+          $items = [];
+          foreach ($content->sorting_location_summaries as $sorting_location_summary) {
+            $items[] = ObjectSerializer::deserialize($sorting_location_summary, $returnType, []);
+          }
+
+          return [
+            $items,
+            $response->getStatusCode(),
+            $response->getHeaders(),
+          ];
+        },
+        function ($exception) {
+          $response = $exception->getResponse();
+          $statusCode = $response->getStatusCode();
+          throw new ApiException(
+            sprintf(
+              '[%d] Error connecting to the API (%s)',
+              $statusCode,
+              $exception->getRequest()->getUri()
+            ),
+            $statusCode,
+            $response->getHeaders(),
+            $response->getBody()
+          );
+        }
+      );
+  }
+
+  /**
+   * Create request for operation 'sortingLocationSummaries'
+   *
+   * @param string $location_uuid The location uuid (required)
+   * @param \DateTime $start_date start datetime (inclusive). Example:
+   *   2020-07-15T08:07:19Z (optional)
+   * @param \DateTime $end_date end datetime (exclusive). Example:
+   *   2020-07-15T08:07:19Z (optional)
+   *
+   * @return \GuzzleHttp\Psr7\Request
+   * @throws \InvalidArgumentException
+   */
+  protected function sortingLocationSummariesRequest($location_uuid, $start_date = NULL, $end_date = NULL) {
+    // verify the required parameter 'location_uuid' is set
+    if ($location_uuid === NULL || (is_array($location_uuid) && count($location_uuid) === 0)) {
+      throw new \InvalidArgumentException(
+        'Missing the required parameter $location_uuid when calling sortingLocationSummaries'
+      );
+    }
+
+    $resourcePath = '/v1/sorting/location/location_summaries';
+    $formParams = [];
+    $queryParams = [];
+    $headerParams = [];
+    $httpBody = '';
+    $multipart = FALSE;
+
+    // query params
+    if ($location_uuid !== NULL) {
+      $queryParams['location_uuid'] = ObjectSerializer::toQueryValue($location_uuid);
+    }
+    // query params
+    if ($start_date !== NULL) {
+      $queryParams['start_date'] = ObjectSerializer::toQueryValue($start_date);
+    }
+    // query params
+    if ($end_date !== NULL) {
+      $queryParams['end_date'] = ObjectSerializer::toQueryValue($end_date);
+    }
+
+
+    // body params
+    $_tempBody = NULL;
+
+    if ($multipart) {
+      $headers = $this->headerSelector->selectHeadersForMultipart(
+        ['application/json']
+      );
+    }
+    else {
+      $headers = $this->headerSelector->selectHeaders(
+        ['application/json'],
+        []
+      );
+    }
+
+    // for model (json/xml)
+    if (isset($_tempBody)) {
+      // $_tempBody is the method argument, if present
+      $httpBody = $_tempBody;
+
+      if ($headers['Content-Type'] === 'application/json') {
+        // \stdClass has no __toString(), so we should encode it manually
+        if ($httpBody instanceof \stdClass) {
+          $httpBody = \GuzzleHttp\json_encode($httpBody);
+        }
+        // array has no __toString(), so we should encode it manually
+        if (is_array($httpBody)) {
+          $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($httpBody));
+        }
+      }
+    }
+    elseif (count($formParams) > 0) {
+      if ($multipart) {
+        $multipartContents = [];
+        foreach ($formParams as $formParamName => $formParamValue) {
+          $multipartContents[] = [
+            'name'     => $formParamName,
+            'contents' => $formParamValue,
+          ];
+        }
+        // for HTTP post (form)
+        $httpBody = new MultipartStream($multipartContents);
+
+      }
+      elseif ($headers['Content-Type'] === 'application/json') {
+        $httpBody = \GuzzleHttp\json_encode($formParams);
+
+      }
+      else {
+        // for HTTP post (form)
+        $httpBody = \GuzzleHttp\Psr7\build_query($formParams);
+      }
+    }
+
+
+    $defaultHeaders = [];
+    if ($this->config->getUserAgent()) {
+      $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+    }
+
+    $headers = array_merge(
+      $defaultHeaders,
+      $headerParams,
+      $headers
+    );
+
+    $query = \GuzzleHttp\Psr7\build_query($queryParams);
+    return new Request(
+      'GET',
+      $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+      $headers,
+      $httpBody
+    );
+  }
+
+  /**
+   * Create http client option
+   *
+   * @return array of http client options
+   * @throws \RuntimeException on file opening failure
+   */
+  protected function createHttpClientOption() {
+    $options = [];
+    if ($this->config->getDebug()) {
+      $options[RequestOptions::DEBUG] = fopen($this->config->getDebugFile(), 'a');
+      if (!$options[RequestOptions::DEBUG]) {
+        throw new \RuntimeException('Failed to open the debug file: ' . $this->config->getDebugFile());
+      }
+    }
+
+    return $options;
+  }
 }
