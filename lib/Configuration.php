@@ -81,7 +81,7 @@ class Configuration
      *
      * @var string
      */
-    protected $host = 'https://api.nedap-bi.com';
+    protected $host = 'https://api.piginsight.com';
 
     /**
      * User agent of the HTTP request, set to "PHP-Swagger" by default
